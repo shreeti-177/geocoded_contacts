@@ -1,0 +1,45 @@
+mixin preference(choice)
+    if (choice)
+        td Yes
+    else
+        td No
+
+doctype html
+head
+    title=title
+body
+    h1 Contacts Listed
+    table
+        thead
+            tr 
+                th Name
+                th Address
+                th Email
+                th Phone
+                th Contact by Mail
+                th Contact by Email
+                th Contact by Phone
+        tbody
+            each contact in contacts
+                tr
+                    td #{contact.prefix} #{contact.first_name} #{contact.last_name}
+                    td #{contact.street}, #{contact.city}, #{contact.state}, #{contact.zip}
+                    td #{contact.email}
+                    td #{contact.phone}
+                    if (contact.pref_any)
+                        td Yes
+                        td Yes
+                        td Yes
+                    else
+                        +preference(contact.pref_mail)
+                        +preference(contact.pref_email)
+                        +preference(contact.pref_phone)
+                             
+                        
+
+                    //- td #{ObjectID(contact.first_name)}
+
+
+
+
+        

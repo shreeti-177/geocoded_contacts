@@ -1,0 +1,77 @@
+mixin text_inputs(attr)
+    label(for=attr.name) 
+    | #{attr.label}
+    if attr.required
+        input(type="text", name=attr.name, id=attr.id, required)
+    else
+        input(type="text", name=attr.name, id=attr.id)
+
+mixin preferred(type,preference)
+    input(type="checkbox", name=type, id=type)
+    label(for="type")
+    | #{preference}
+
+doctype html
+head
+    title=title
+body
+    form(action="/mailer" method="post")
+        .contact_name
+            p
+                label(for="prefix") Prefix:
+                input(type="radio", name="prefix", value="Mr.")
+                | Mr.
+                input(type="radio", name="prefix", value="Mrs.") 
+                | Mrs.
+                input(type="radio", name="prefix", value="Ms.") 
+                | Ms.
+                input(type="radio", name="prefix", value="Dr.") 
+                | Dr.
+            - const first_name={label:"First Name: ", name:"first_name", id:"first_name", required:true}
+            - const last_name={label:"Last Name: ", name:"last_name", id:"last_name", required:true}
+            
+            +text_inputs(first_name)
+            +text_inputs(last_name)
+        
+        .contact_address
+            p
+
+                - const street={label:"Street: ", name:"street", id:"street", required:true}
+                - const city={label:"City: ", name:"city", id:"city", required:true}
+                +text_inputs(street)
+                +text_inputs(city)
+            p
+                label(for="state") State:
+                select(name="state", id="state", required)
+                    option(selected="selected", value="") Select
+                    option(value="NJ") NJ
+                    option(value="NY") NY
+                    option(value="PA") PA
+                    option(value="CT") CT
+
+                -const zip={label:"Zip: ", name:"zip", id:"zip", required:true}
+                +text_inputs(zip)
+
+        .contact_pref
+            p
+                -const phone={label:"Phone: ", name:"phone", id:"phone"}
+                +text_inputs(phone)
+            p
+                -const email={label:"Email: ", name:"email", id:"email"}
+                +text_inputs(email)
+            p
+                | How may we contact you?
+                | Check all that apply.
+
+                +preferred("pref_phone","Phone")
+                +preferred("pref_email","Email")
+                +preferred("pref_mail","Mail")
+                +preferred("pref_any","Any")
+                
+
+        .submit
+            button(type="submit", name="send", id="send") Send me spam forever!
+
+    .display
+        p
+            a(href="contacts") Display all contacts 
