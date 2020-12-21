@@ -3,12 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 var nodeGeocoder = require('node-geocoder');
+
 
 var indexRouter = require('./routes/mailer');
 var contactsRouter = require('./routes/contacts');
 var usersRouter = require('./routes/users');
 var dbRouter = require('./routes/database');
+var authRouter = require('./routes/login');
 
 var app = express();
 
@@ -33,12 +36,20 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({ secret: 'cmps369' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
 app.use('/contacts', contactsRouter);
 app.use('/users', usersRouter);
+app.use('/login', authRouter)
+
+app.get('/logout', (req, res) => {
+  req.session.user = undefined;
+  res.redirect('/login');
+})
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

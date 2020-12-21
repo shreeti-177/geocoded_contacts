@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    //- #message
+    //-     #{message}
+    form(action="/login", method="post")
+        .form-group
+            label(for="username") Username:
+            input.form-control(name="username",type="text", placeholder="Enter username")
+        .form-group
+            label(for="password") Password:
+            input.form-control(name="password",type="password", placeholder="Password")
+        button.btn.btn-primary(type="submit") Submit
+

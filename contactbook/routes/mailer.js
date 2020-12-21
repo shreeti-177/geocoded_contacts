@@ -76,6 +76,3 @@ router.get('/index', (req, res, next) => {
   res.render('index', { title: "Title" });
 })
 module.exports = router;
-// module.exports = {
-//   posted: posted
-// };

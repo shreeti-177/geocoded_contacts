@@ -1,9 +1,17 @@
 var express = require('express');
-const { ObjectID } = require('mongodb');
 var router = express.Router();
 var db = require('./database');
 var process = require('./mailer');
+var { ObjectID } = require('mongodb');
 
+router.use((req, res, next)=> {
+    if (req.session.user) {
+        next();
+    }
+    else {
+        res.redirect("/login");
+    }
+});
 const Display = async (req, res, next) => {
     var results = await db.Read();
     res.render('contacts', { contacts: results});
