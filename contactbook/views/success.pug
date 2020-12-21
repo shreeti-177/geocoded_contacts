@@ -1,6 +1,16 @@
-doctype html
-head
-    title=title
-body
-    h1 Thank you!
-    //- h1 #{contact.firstName}
+extends layout
+
+block content
+    body.container
+        div
+            div 
+                include navbar.pug
+
+            .card.row.mx-auto.form
+                .card-header
+                    h4 Your contact has been successfully stored. Thank You!
+                .card-body
+                    p Name: #{contact.prefix} #{contact.firstName} #{contact.lastName} 
+                    p Address: #{contact.street}, #{contact.city}, #{contact.state}, #{contact.zip}  
+                    p Phone: #{contact.phone}
+                    p Email: #{contact.email}

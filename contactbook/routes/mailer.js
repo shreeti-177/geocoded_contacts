@@ -65,7 +65,8 @@ const Posted = async (req, res, next) => {
     res.sendStatus(500);
     return;
   }
-  res.render("success", {});
+  
+  res.render("success", {contact: contact});
 };
 
 // ***********************requests to /mailer********************************

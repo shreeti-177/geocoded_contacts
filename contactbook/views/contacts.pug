@@ -9,12 +9,22 @@ block content
                 include navbar.pug
             #contactPage 
 
+
                 .Read#contactList(v-if='state==="Read"')
                     .card.row.mx-auto.form
-                        .card-header.row
-                            h1 Contacts Listed 
-                            .Create
-                                button.btn.btn-primary(type="button", @click='ShowForm()') Add a New Contact
+                        .card-header
+                            .row
+                                h1 Contacts Listed 
+                            .row
+                                .col-xs-4.form
+                                    input.form-control(type="text", name="key", @keyup="SearchFirst", v-model="key", placeholder="Search by First Name...")
+                                    //- input(type="text",id="search", v-model="searchkey" v-on:keyup="SearchFirst", placeholder="Search by first name...")
+                                .col-xs-4.form
+                                    input.form-control(type="text", name="key", v-on:keyup="SearchFirst", v-model="key", placeholder="Search by First Name...")
+
+                                .col-md-4.form
+                                    .Create
+                                        button.btn.btn-primary(type="button", @click='ShowForm()') Add a New Contact
 
                         .card-body 
                             .contactTable.table-responsive
@@ -39,13 +49,7 @@ block content
                                                 button.btn.btn-primary(type="button",@click='EditForm(contact)') Update
                                             td
                                                 button.btn.btn-danger(type="button", data-toggle="modal", @click='DeleteContact(contact._id)') Delete
-                    .contactMap
-                        .card.row.mx-auto.form
-                            .card-header
-                                h3 See where your contacts are located! 
-                            .card-body 
-                                #mapid            
-
+       
                                                      
                 #newForm(v-if='state==="CreateUpdate"')
                     form
@@ -56,21 +60,28 @@ block content
                         .form-group(v-if='substate==="Update"')
                                 button.btn.btn-primary.updateButton(type="button",@click='PostContact()') Save Changes and Update
                                 button.btn.btn-default.cancelButton(type="submit",@click='Cancel()') Cancel
-       
-
-                                        //- .Delete#confirmDeletion
-                                        //-     .modal.fade
-                                        //-         .modal-dialog
-                                        //-             .modal-content
-                                        //-                 .modal-header
-                                        //-                     .modal-title Confirm Deletion
-                                        //-                     button.close(type="button", data-dismiss="modal", @click="'state'==='Read'") Close
-                                        //-                 .modal-body
-                                        //-                     p Are you sure you want to delete this contact?
-                                        //-                 .modal-footer 
-                                        //-                     button.btn.btn-secondary(@click="state==='Read'") Close  
-                                        //-                     button.btn.btn-secondary(@click="DeleteContact()") Close  
                 
+                //- .Delete#confirmDeletion(v-if='state==="Delete"')
+                //-     .modal.fade
+                //-         .modal-dialog
+                //-             .modal-content
+                //-                 .modal-header
+                //-                     .modal-title Confirm Deletion
+                //-                     button.close(type="button", data-dismiss="modal", @click="'state'==='Read'") Close
+                //-                 .modal-body
+                //-                     p Are you sure you want to delete this contact?
+                //-                 .modal-footer 
+                //-                     button.btn.btn-secondary(@click="DeleteContact()") Close  
+                //-                     button.btn.btn-secondary(@click="Cancel()") Close  
+                
+       
+                .contactMap
+                    .card.row.mx-auto.form
+                        .card-header
+                            h3 See where your contacts are located! 
+                        .card-body 
+                            #mapid     
+                                        
                 
              
     
