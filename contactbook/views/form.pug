@@ -1,0 +1,57 @@
+mixin textInput(label, name, required)
+    -let model="contact" + "." + name
+    label(for=name) #{label}
+    if required
+        input(type="text", name=name, required, v-model=model)
+    else
+        input( type="text", name=name, v-model=model)
+
+mixin preferred(type,preference)
+    -let pref="contact" + "." + type
+    input.checkbox-inline(type="checkbox", name=type, id=type, v-model=pref)
+    label(for="type") #{preference}
+
+block content
+    .form-group
+        label.radio-inline(for="prefix") Prefix:
+        input.radio-inline(type="radio", name="prefix", value="Mr.", v-model="contact.prefix") 
+        | Mr.
+        input.radio-inline(type="radio", name="prefix", value="Mrs.", v-model="contact.prefix") 
+        | Mrs.
+        input.radio-inline(type="radio", name="prefix", value="Ms.", v-model="contact.prefix") 
+        | Ms.
+        input.radio-inline(type="radio", name="prefix", value="Dr.", v-model="contact.prefix") 
+        | Dr.
+        //- - const firstName={label:"First Name: ", name:"firstName", id:"firstName", required:true}
+        //- - const lastName={label:"Last Name: ", name:"lastName", id:"lastName", required:true}  
+    .form-group
+        +textInput("First Name","firstName", required=true)
+        +textInput("Last Name","LastName", required=true)
+
+    .form-group
+        +textInput("Street","street", required=true)
+        +textInput("City","city", required=true)
+
+    .form-group
+        -const states=[ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+        label(for="state") State:
+        select(name="state", required, v-model="contact.state")
+            option(selected="selected", value="") Select
+            each val in states
+                option(value=val)=val 
+        +textInput("Zip","zip", required=true)
+    
+    .form-group
+        +textInput("Phone","phone")
+        +textInput("Email","email")
+
+    .form-group
+        | How may we contact you?
+        | Check all that apply.
+        +preferred("prefPhone","Phone")
+        +preferred("prefEmail","Email")
+        +preferred("prefMail","Mail")
+        +preferred("prefAny","Any")
+        
+
+block update

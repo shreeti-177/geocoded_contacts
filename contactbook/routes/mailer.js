@@ -1,54 +1,81 @@
 var express = require('express');
 var router = express.Router();
-module.exports = router;
+var db = require('./database');
 
-// GET home page where user fill out a new form. 
-const home = async (req, res, next)=> {
-  res.render('home', { title: 'Contacts Form' });
-  // const r = await req.geocoder.geocode('505 Ramapo Valley Road, Mahwah, NJ, 07430');
-  // console.log(r);
+/**
+ * home(): renders the home page that allows the user to submit a new form entry
+ */
+const home = (req, res, next) => {
+  res.render('mailer', { title: 'Contacts Form' });
 };
 
-
-// POST after the form is submitted, and insert information into the database.
-// Display a thankyou page!
-const posted = (req, res, next) => {
-  console.log('enters post');
-  var contact_obj = {
-    prefix: req.body.prefix,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    street: req.body.street,
-    city: req.body.city,
-    state: req.body.state,
-    zip: req.body.zip,
-    phone: req.body.phone,
-    email: req.body.email,
-    pref_any: req.body.pref_any,
-    pref_phone: req.body.pref_phone,
-    pref_mail: req.body.pref_mail,
-    pref_email: req.body.pref_email
+/**
+ * posted(): inserts new entry into database and shows a thankyou page
+ */
+const posted = async (req, res, next) => {
+  const entry = req.body;
+  var contact = {
+    prefix: entry.prefix,
+    firstName: entry.firstName,
+    lastName: entry.lastName,
+    street: entry.street,
+    city: entry.city,
+    state: entry.state,
+    zip: entry.zip,
+    phone: entry.phone,
+    email: entry.email,
+    prefPhone: false,
+    prefEmail: false,
+    prefMail: false,
+    latitude: null,
+    longitude: null
   };
-  
-  result = req.contacts.insertOne(contact_obj, async (err, document) => {
-    const entry = document.ops[0];
-    const address = entry.street + ", " + entry.city + ", " + entry.state + ", " + entry.zip;
-    const location = await req.geocoder.geocode(address);
-    // console.log(location);
-    const latitude= location[0].latitude;
+  if (entry.prefAny) {
+    contact.prefPhone = true;
+    contact.prefEmail = true;
+    contact.prefMail = true;
+    
+  }
+  else if (entry.prefPhone) {
+    contact.prefPhone = true;
+  }
+  else if (entry.prefEmail) {
+    contact.prefEmail = true;
+  }
+  else if (entry.prefMail) {
+    contact.prefMail = true;
+  }
+  // console.log(contact);
+
+  const address = entry.street + ", " + entry.city + ", " + entry.state + ", " + entry.zip;
+  const location = await req.geocoder.geocode(address);
+  if (location[0]===undefined) {
+    console.error("Address location not found. Co-ordinates set to default: null.");
+  }
+  else {
+    const latitude = location[0].latitude;
     const longitude = location[0].longitude;
-    await req.contacts.updateOne({ _id: entry._id }, {
-      $set: {
-        "latitude": latitude,
-        "longitude": longitude}
-    }
-    );
-  });
-  // console.log(result);
+    contact.latitude = latitude;
+    contact.longitude = longitude;      
+  }
+  try { 
+    db.Add(contact);
+  }
+  catch (error) {
+    res.sendStatus(500);
+    return;
+  }
   res.render("success", {});
-}
+};
 
-
+// ***********************GET/POST calls********************************
 router.get('/', home);
 router.get('/mailer', home);
 router.post('/mailer', posted);
+router.get('/index', (req, res, next) => {
+  res.render('index', { title: "Title" });
+})
+module.exports = router;
+// module.exports = {
+//   posted: posted
+// };

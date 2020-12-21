@@ -1,45 +1,108 @@
-mixin preference(choice)
-    if (choice)
-        td Yes
-    else
-        td No
+extends layout
 
-doctype html
-head
-    title=title
-body
-    h1 Contacts Listed
-    table
-        thead
-            tr 
-                th Name
-                th Address
-                th Email
-                th Phone
-                th Contact by Mail
-                th Contact by Email
-                th Contact by Phone
-        tbody
-            each contact in contacts
-                tr
-                    td #{contact.prefix} #{contact.first_name} #{contact.last_name}
-                    td #{contact.street}, #{contact.city}, #{contact.state}, #{contact.zip}
-                    td #{contact.email}
-                    td #{contact.phone}
-                    if (contact.pref_any)
-                        td Yes
-                        td Yes
-                        td Yes
-                    else
-                        +preference(contact.pref_mail)
-                        +preference(contact.pref_email)
-                        +preference(contact.pref_phone)
-                             
-                        
+//- mixin preference(choice)
+//-     if (choice)
+//-         td Yes
+//-     else
+//-         td No
 
-                    //- td #{ObjectID(contact.first_name)}
+block content
+    script.
+        var renderVal=JSON.parse('!{JSON.stringify(contacts)}');
+    body
+        .container
+            #contactPage
+                .Create
+                    button.btn.btn-primary(type="button", @click='ShowForm()') Create
+                    
+                #newForm(v-if='state==="CreateUpdate"')
+                    form
+                        include form.pug
+                        .form-group(v-if='substate==="Create"')
+                            button.btn.btn-primary(type="button",@click='PostContact()') Send me spam forever!
+                            button.btn.btn-default(type="submit",@click='Cancel()') Cancel
+                        .form-group(v-if='substate==="Update"')
+                            button.btn.btn-primary(type="button",@click='PostContact()') Save Changes and Update!
+                            button.btn.btn-default(type="submit",@click='Cancel()') Cancel
 
 
+                .Read#contactList(v-if='state==="Read"')
+                    h1 Contacts Listed 
+                    .contactTable
+                        table.table.table-hover
+                            thead
+                                tr
+                                    th(v-for="header in headers") {{header}}
+
+                            tbody
+                                tr(v-for="contact in contacts")
+                                    td.Name {{contact.prefix}} {{contact.firstName}} {{contact.lastName}}
+                                    td.Address {{contact.street}}, {{contact.city}}, {{contact.state}}, {{contact.zip}}
+                                    td.Email {{contact.email}}
+                                    td.Phone {{contact.phone}}
+                                    td(v-if="contact.prefMail") Yes 
+                                    td(v-else) No
+                                    td(v-if="contact.prefEmail") Yes 
+                                    td(v-else) No
+                                    td(v-if="contact.prefPhone") Yes 
+                                    td(v-else) No
+                                    //- +preference(contact.prefMail)
+                                    //- +preference(contact.prefEmail)
+                                    //- +preference("contact.prefPhone")
+                                    td(hidden) {{contact.latitude}}
+                                    td(hidden) {{contact.longitude}}
+                                    td(hidden) {{contact._id}}
+                                    td
+                                        button.btn.btn-primary(type="button",@click='EditForm(contact)') Update
+                                    td
+                                        button.btn.btn-danger(type="button", data-toggle="modal", @click='DeleteContact(contact._id)') Delete
+                    .contactMap
+                        #mapid                   
+
+                                        //- .Delete#confirmDeletion
+                                        //-     .modal.fade
+                                        //-         .modal-dialog
+                                        //-             .modal-content
+                                        //-                 .modal-header
+                                        //-                     .modal-title Confirm Deletion
+                                        //-                     button.close(type="button", data-dismiss="modal", @click="'state'==='Read'") Close
+                                        //-                 .modal-body
+                                        //-                     p Are you sure you want to delete this contact?
+                                        //-                 .modal-footer 
+                                        //-                     button.btn.btn-secondary(@click="state==='Read'") Close  
+                                        //-                     button.btn.btn-secondary(@click="DeleteContact()") Close  
+                
+                
+             
+                        //- .form-group
+                            //- label.radio-inline(for="prefix") Prefix:
+                            //- input.radio-inline(type="radio", name="prefix", value="Mr.", v-model="contact.prefix") 
+                            //- | Mr.
+                            //- input.radio-inline(type="radio", name="prefix", value="Mrs.", v-model="contact.prefix") 
+                            //- | Mrs.
+                            //- input.radio-inline(type="radio", name="prefix", value="Ms.", v-model="contact.prefix") 
+                            //- | Ms.
+                            //- input.radio-inline(type="radio", name="prefix", value="Dr.", v-model="contact.prefix") 
+                            //- | Dr.
+                                
+                //-     .form-group
+                //-         button.btn.btn-primary(type="submit",@click='UpdateContact()') Save changes and Update!
+                //-         button.btn.btn-default(type="submit",@click='Cancel()') Cancel
+
+
+
+
+
+
+
+
+
+           
+                    
 
 
         
+        script(src="./javascripts/vue.js")
+
+       
+

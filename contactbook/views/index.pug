@@ -1,5 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  body 
+    div#index
+      h1= title
+      p Welcome to #{title}
+      p {{message}}
+
+    script(src="./javascripts/vue.js")
+      
+
+

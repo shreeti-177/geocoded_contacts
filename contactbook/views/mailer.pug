@@ -1,0 +1,68 @@
+extends layout
+
+block content
+
+    body#contacts
+        div
+            form(action="/mailer", method="post")
+                include form.pug
+            
+                .form-group
+                    button.btn.btn-primary(type="submit") Send me spam forever!
+
+            .display
+                a.btn.btn-link(href="contacts") Display all contacts 
+                //- .contact_name
+                //-     p
+                //-         label(for="prefix") Prefix:
+                //-         input(type="radio", name="prefix", value="Mr.")
+                //-         | Mr.
+                //-         input(type="radio", name="prefix", value="Mrs.") 
+                //-         | Mrs.
+                //-         input(type="radio", name="prefix", value="Ms.") 
+                //-         | Ms.
+                //-         input(type="radio", name="prefix", value="Dr.") 
+                //-         | Dr.
+                //-     - const firstName={label:"First Name: ", name:"firstName", id:"firstName", required:true}
+                //-     - const lastName={label:"Last Name: ", name:"lastName", id:"lastName", required:true}
+                    
+                //-     +text_inputs(firstName)
+                //-     +text_inputs(lastName)
+                
+                //- .contact_address
+                //-     p
+
+                //-         - const street={label:"Street: ", name:"street", id:"street", required:true}
+                //-         - const city={label:"City: ", name:"city", id:"city", required:true}
+                //-         +text_inputs(street)
+                //-         +text_inputs(city)
+                //-     p
+                //-         label(for="state") State:
+                //-         select(name="state", id="state", required)
+                //-             option(selected="selected", value="") Select
+                //-             option(value="NJ") NJ
+                //-             option(value="NY") NY
+                //-             option(value="PA") PA
+                //-             option(value="CT") CT
+
+                //-         -const zip={label:"Zip: ", name:"zip", id:"zip", required:true}
+                //-         +text_inputs(zip)
+
+                //- .contact_pref
+                //-     p
+                //-         -const phone={label:"Phone: ", name:"phone", id:"phone"}
+                //-         +text_inputs(phone)
+                //-     p
+                //-         -const email={label:"Email: ", name:"email", id:"email"}
+                //-         +text_inputs(email)
+                //-     p
+                //-         | How may we contact you?
+                //-         | Check all that apply.
+
+                //-         +preferred("prefPhone","Phone")
+                //-         +preferred("prefEmail","Email")
+                //-         +preferred("prefMail","Mail")
+                //-         +preferred("prefAny","Any")
+                        
+
+        

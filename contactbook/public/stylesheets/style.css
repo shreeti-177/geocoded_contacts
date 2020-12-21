@@ -6,3 +6,9 @@ body {
 a {
   color: #00B7FF;
 }
+
+#mapid {
+  height:400px; 
+  min-width:100px;
+  width:auto;
+} 
