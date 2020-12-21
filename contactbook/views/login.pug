@@ -1,14 +1,28 @@
 extends layout
 
 block content
-    //- #message
-    //-     #{message}
-    form(action="/login", method="post")
-        .form-group
-            label(for="username") Username:
-            input.form-control(name="username",type="text", placeholder="Enter username")
-        .form-group
-            label(for="password") Password:
-            input.form-control(name="password",type="password", placeholder="Password")
-        button.btn.btn-primary(type="submit") Submit
+    body.container
+        div
+            div 
+                include navbar.pug
 
+            #message
+                #{message}
+
+            .card.row.mx-auto.form
+                .card-header
+                    h1 Please log in to continue!
+                .card-body
+                    form(action="/login", method="post") 
+                        .form-row.form-group.col-md-12
+                            label(for="username") Username:
+                            input.form-control(name="username",type="text",required, placeholder="Enter username")
+                        .form-row.form-group.col-md-12
+                            label(for="password") Password:
+                            input.form-control(name="password",type="password", required, placeholder="Password")
+                        .form-row
+                            .form-group.col-md-12
+                                button.btn.btn-primary(type="submit") Submit
+
+
+    

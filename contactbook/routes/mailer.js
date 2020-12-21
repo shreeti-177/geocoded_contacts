@@ -3,16 +3,16 @@ var router = express.Router();
 var db = require('./database');
 
 /**
- * home(): renders the home page that allows the user to submit a new form entry
+ * Home(): renders the home page that allows the user to submit a new form entry
  */
-const home = (req, res, next) => {
+const Home = (req, res, next) => {
   res.render('mailer', { title: 'Contacts Form' });
 };
 
 /**
- * posted(): inserts new entry into database and shows a thankyou page
+ * Posted(): inserts new entry into database and shows a thankyou page
  */
-const posted = async (req, res, next) => {
+const Posted = async (req, res, next) => {
   const entry = req.body;
   var contact = {
     prefix: entry.prefix,
@@ -68,11 +68,12 @@ const posted = async (req, res, next) => {
   res.render("success", {});
 };
 
-// ***********************GET/POST calls********************************
-router.get('/', home);
-router.get('/mailer', home);
-router.post('/mailer', posted);
+// ***********************requests to /mailer********************************
+router.get('/', Home);
+router.get('/mailer', Home);
+router.post('/mailer', Posted);
 router.get('/index', (req, res, next) => {
   res.render('index', { title: "Title" });
 })
+
 module.exports = router;

@@ -20,28 +20,40 @@ const initMap = () => {
     contactMap.invalidateSize();
 }
 
+// // ***********************mark the map********************************
+// /**
+//  * Mark(contacts): marks the map with the contact addresses given 
+// //  */
+
 const Mark = (contacts) => {
     var markers = [];
     for (contact in contacts) {
+
+        // mark each address co-ordinates
         const contactObj = contacts[contact];
         const latitude = contactObj.latitude;
         const longitude = contactObj.longitude;
         markers.push([latitude, longitude]);
+
+        // add Tooltip to each marker
         var marker = L.marker([latitude, longitude]);
         const info =
             `Contact Name: ${contactObj.prefix}  ${contactObj.firstName}  ${contactObj.lastName} \ Address: ${contactObj.street}  ${contactObj.city}  ${contactObj.state}  ${contactObj.zip}`;
 
         marker.bindTooltip(JSON.stringify(info)).openTooltip().addTo(contactMap);
-        // layer.addTo(contactMap);
-        // marker.bindTooltip(contacts[contact]).openTooltip()
+
     }
-    // console.log(markers);
+    // focus map-radius according to the contacts in the list 
     var bounds = new L.LatLngBounds(markers);
     contactMap.fitBounds(bounds);
    
     contactMap.invalidateSize();
 } 
 
+// // ***********************recenter the map********************************
+// /**
+//  * Recenter(contact): recenters map to the location passed 
+// //  */
 const Recenter = (contact) => {
     const latitude = contact.latitude;
     const longitude = contact.longitude;

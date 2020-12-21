@@ -23,7 +23,7 @@ const SetConnection = async () => {
 };
 
 /**
- * Add(): adds a new entry to the database 
+ * Add(contact): adds a new contact entry to the database 
  */
 const Add = async (contact) => {
     // console.log(contacts);
@@ -48,6 +48,9 @@ const Read = async () => {
     }
 }
 
+/**
+ * GetContact(contactId): accesses a single contact from the database based on contactId
+ */
 const GetContact = async function (contactId) {
     try {
         var result = await contacts.find({ "_id": ObjectID(contactId) }).toArray();
@@ -59,6 +62,9 @@ const GetContact = async function (contactId) {
     }
 }
 
+/**
+ * Update(contact): updates the contact that matches the id of the contact passed
+ */
 const Update = async (contact) => {
     try {
         await contacts.replaceOne({ _id: ObjectID(contact._id) }, contact,{upsert:true});
@@ -69,17 +75,18 @@ const Update = async (contact) => {
     }
 }
 
+/**
+ * Delete(contactId): deletes the contact that matches the id of the contact passed
+ */
 const Delete = async (contactId) => {
     try {
         await contacts.deleteOne({ _id: ObjectID(contactId) });
         return;
-        // console.log("deleted");
     }
     catch (error) {
         console.log(error.message);
         res.render('error');
     }
-   
 }
 
 // ***********************export modules for use********************************
@@ -87,7 +94,6 @@ module.exports = {
     SetConnection: SetConnection,
     Add: Add,
     Read: Read,
-    contacts: contacts,
     GetContact: GetContact,
     Update: Update,
     Delete: Delete

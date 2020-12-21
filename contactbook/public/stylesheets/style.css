@@ -1,14 +1,1 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
-
-#mapid {
-  height:400px; 
-  min-width:100px;
-  width:auto;
-} 
+@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(http://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxP.ttf) format('truetype')}@font-face{font-family:'Raleway';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/raleway/v18/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaooCP.ttf) format('truetype')}#mapid{height:400px;min-width:100px;width:auto}body{padding:50px;font-family:'Raleway',sans-serif;font-weight:normal}.form-group{font-family:'Raleway',sans-serif}.card{min-width:400px;border-radius:10px;padding:20px;margin-top:10px;background-color:#f2f2f2}.form-check-input,.form-check-label{margin:0 10px 0 10px}.table-hover tbody tr:hover td,.table-hover tbody tr:hover th{background-color:aliceblue}

@@ -1,63 +1,62 @@
 extends layout
 
-//- mixin preference(choice)
-//-     if (choice)
-//-         td Yes
-//-     else
-//-         td No
-
 block content
     script.
         var renderVal=JSON.parse('!{JSON.stringify(contacts)}');
-    body
-        .container
-            #contactPage
-                .Create
-                    button.btn.btn-primary(type="button", @click='ShowForm()') Create
-                    
+    body.container
+        div 
+            div
+                include navbar.pug
+            #contactPage 
+
+                .Read#contactList(v-if='state==="Read"')
+                    .card.row.mx-auto.form
+                        .card-header.row
+                            h1 Contacts Listed 
+                            .Create
+                                button.btn.btn-primary(type="button", @click='ShowForm()') Add a New Contact
+
+                        .card-body 
+                            .contactTable.table-responsive
+                                table.table.table-hover
+                                    thead
+                                        tr
+                                            th(v-for="header in headers") {{header}}
+
+                                    tbody
+                                        tr(v-for="contact in contacts", @click="Locate(contact)")
+                                            td.Name {{contact.prefix}} {{contact.firstName}} {{contact.lastName}}
+                                            td.Address {{contact.street}}, {{contact.city}}, {{contact.state}}, {{contact.zip}}
+                                            td.Email {{contact.email}}
+                                            td.Phone {{contact.phone}}
+                                            td(v-if="contact.prefMail") Yes 
+                                            td(v-else) No
+                                            td(v-if="contact.prefEmail") Yes 
+                                            td(v-else) No
+                                            td(v-if="contact.prefPhone") Yes 
+                                            td(v-else) No
+                                            td
+                                                button.btn.btn-primary(type="button",@click='EditForm(contact)') Update
+                                            td
+                                                button.btn.btn-danger(type="button", data-toggle="modal", @click='DeleteContact(contact._id)') Delete
+                    .contactMap
+                        .card.row.mx-auto.form
+                            .card-header
+                                h3 See where your contacts are located! 
+                            .card-body 
+                                #mapid            
+
+                                                     
                 #newForm(v-if='state==="CreateUpdate"')
                     form
                         include form.pug
                         .form-group(v-if='substate==="Create"')
-                            button.btn.btn-primary(type="button",@click='PostContact()') Send me spam forever!
-                            button.btn.btn-default(type="submit",@click='Cancel()') Cancel
+                                button.btn.btn-primary.createButton(type="button",@click='PostContact()') Add New Contact
+                                button.btn.btn-default.cancelButton(type="submit",@click='Cancel()') Cancel
                         .form-group(v-if='substate==="Update"')
-                            button.btn.btn-primary(type="button",@click='PostContact()') Save Changes and Update!
-                            button.btn.btn-default(type="submit",@click='Cancel()') Cancel
-
-
-                .Read#contactList(v-if='state==="Read"')
-                    h1 Contacts Listed 
-                    .contactTable
-                        table.table.table-hover
-                            thead
-                                tr
-                                    th(v-for="header in headers") {{header}}
-
-                            tbody
-                                tr(v-for="contact in contacts", @click="Locate(contact)")
-                                    td.Name {{contact.prefix}} {{contact.firstName}} {{contact.lastName}}
-                                    td.Address {{contact.street}}, {{contact.city}}, {{contact.state}}, {{contact.zip}}
-                                    td.Email {{contact.email}}
-                                    td.Phone {{contact.phone}}
-                                    td(v-if="contact.prefMail") Yes 
-                                    td(v-else) No
-                                    td(v-if="contact.prefEmail") Yes 
-                                    td(v-else) No
-                                    td(v-if="contact.prefPhone") Yes 
-                                    td(v-else) No
-                                    //- +preference(contact.prefMail)
-                                    //- +preference(contact.prefEmail)
-                                    //- +preference("contact.prefPhone")
-                                    td(hidden) {{contact.latitude}}
-                                    td(hidden) {{contact.longitude}}
-                                    td(hidden) {{contact._id}}
-                                    td
-                                        button.btn.btn-primary(type="button",@click='EditForm(contact)') Update
-                                    td
-                                        button.btn.btn-danger(type="button", data-toggle="modal", @click='DeleteContact(contact._id)') Delete
-                    .contactMap
-                        #mapid                   
+                                button.btn.btn-primary.updateButton(type="button",@click='PostContact()') Save Changes and Update
+                                button.btn.btn-default.cancelButton(type="submit",@click='Cancel()') Cancel
+       
 
                                         //- .Delete#confirmDeletion
                                         //-     .modal.fade

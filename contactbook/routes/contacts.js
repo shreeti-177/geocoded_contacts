@@ -4,6 +4,7 @@ var db = require('./database');
 var process = require('./mailer');
 var { ObjectID } = require('mongodb');
 
+// ***********************redirect to login if not logged in********************************
 router.use((req, res, next)=> {
     if (req.session.user) {
         next();
@@ -12,11 +13,18 @@ router.use((req, res, next)=> {
         res.redirect("/login");
     }
 });
+
+/**
+ * Display(): reads the contact list from database to render on contacts page
+ */
 const Display = async (req, res, next) => {
     var results = await db.Read();
     res.render('contacts', { contacts: results});
 }
 
+/**
+ * PostContact(): posts any new/updated contacts to the database
+ */
 const PostContact = async (req, res, next) => {
     var contact = req.body.contact;
     contact._id = ObjectID(contact._id);
@@ -24,6 +32,8 @@ const PostContact = async (req, res, next) => {
     // console.log("received above, exisiting match below");
     var match = await db.GetContact(contact._id);
     // console.log(match);
+
+    // if match is found, update; else, add
     if (match.length > 0) {
         await db.Update(contact);
     }
@@ -45,6 +55,9 @@ const PostContact = async (req, res, next) => {
     res.end(JSON.stringify({ newList: results }));
 }
 
+/**
+ * DeleteContact(): calls delete to delete from database
+ */
 const DeleteContact = async (req, res, next) => {
     const contactId = ObjectID(req.body.contactId);
     await db.Delete(contactId);
@@ -52,8 +65,8 @@ const DeleteContact = async (req, res, next) => {
     res.end();
 }
 
-  
 
+// ***********************requests to /contacts********************************
 router.get("/", Display);
 router.post("/", PostContact);
 router.post("/:id/delete", DeleteContact);

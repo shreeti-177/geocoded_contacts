@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const user = "cmps369";
 let password = "finalproject";
 
+//**********************Hash password********************************
 bcrypt.genSalt(10, function (err, salt) {
     bcrypt.hash(password, salt, function (err, hashed) {
         // console.log(hashed);
@@ -12,12 +13,14 @@ bcrypt.genSalt(10, function (err, salt) {
     });
 });
 
+//***********************Access login page*******************************
 router.get("/", (req, res) => {
     res.render("login", {});
 })
 
+//**********************Confirms login********************************
 router.post("/", async (req, res) => {
-    console.log("logged");
+    // console.log("logged");
     console.log(req.body.username);
     console.log(req.body.password);
     if (req.body.username !== user) {
@@ -27,7 +30,7 @@ router.post("/", async (req, res) => {
         const result = await bcrypt.compare(req.body.password, password);
         if (result) {
             req.session.user = req.body.username;
-            console.log(`Welcome ${req.session.user}`);
+            // console.log(`Welcome ${req.session.user}`);
             res.redirect("/contacts");
         } else {
             res.render('login', { message: "Invalid Password." });
