@@ -8,18 +8,19 @@ new Vue({
         substate: ""
     },
     // created() {
-        
+    //     initMap();  
     // },
 
     mounted() {
         let v = this;
         v.state = "Read";
         v.contacts = renderVal;
-        initMap(v.contacts);
+        initMap();
+        Mark(this.contacts);
     },
 
     updated() {
-        initMap();
+        Mark(this.contacts);
     },
 
     methods: {

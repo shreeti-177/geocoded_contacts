@@ -35,7 +35,7 @@ block content
                                     th(v-for="header in headers") {{header}}
 
                             tbody
-                                tr(v-for="contact in contacts")
+                                tr(v-for="contact in contacts", @click="Locate(contact)")
                                     td.Name {{contact.prefix}} {{contact.firstName}} {{contact.lastName}}
                                     td.Address {{contact.street}}, {{contact.city}}, {{contact.state}}, {{contact.zip}}
                                     td.Email {{contact.email}}
@@ -74,33 +74,7 @@ block content
                 
                 
              
-                        //- .form-group
-                            //- label.radio-inline(for="prefix") Prefix:
-                            //- input.radio-inline(type="radio", name="prefix", value="Mr.", v-model="contact.prefix") 
-                            //- | Mr.
-                            //- input.radio-inline(type="radio", name="prefix", value="Mrs.", v-model="contact.prefix") 
-                            //- | Mrs.
-                            //- input.radio-inline(type="radio", name="prefix", value="Ms.", v-model="contact.prefix") 
-                            //- | Ms.
-                            //- input.radio-inline(type="radio", name="prefix", value="Dr.", v-model="contact.prefix") 
-                            //- | Dr.
-                                
-                //-     .form-group
-                //-         button.btn.btn-primary(type="submit",@click='UpdateContact()') Save changes and Update!
-                //-         button.btn.btn-default(type="submit",@click='Cancel()') Cancel
-
-
-
-
-
-
-
-
-
-           
-                    
-
-
+    
         
         script(src="./javascripts/vue.js")
 

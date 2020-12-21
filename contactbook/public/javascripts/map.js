@@ -17,21 +17,35 @@ const initMap = () => {
         zoomOffset: -1,
         accessToken: access_token
     }).addTo(contactMap);
-
-    // 
-    // contactMap.invalidateSize();
-} 
-
-const Mark = async (contacts) => {
-    for (contact in contacts) {
-        var marker = await L.marker([latitude, longitude]).addTo(contactMap); 
-    }
+    contactMap.invalidateSize();
 }
+
+const Mark = (contacts) => {
+    var markers = [];
+    for (contact in contacts) {
+        const contactObj = contacts[contact];
+        const latitude = contactObj.latitude;
+        const longitude = contactObj.longitude;
+        markers.push([latitude, longitude]);
+        var marker = L.marker([latitude, longitude]);
+        const info =
+            `Contact Name: ${contactObj.prefix}  ${contactObj.firstName}  ${contactObj.lastName} \ Address: ${contactObj.street}  ${contactObj.city}  ${contactObj.state}  ${contactObj.zip}`;
+
+        marker.bindTooltip(JSON.stringify(info)).openTooltip().addTo(contactMap);
+        // layer.addTo(contactMap);
+        // marker.bindTooltip(contacts[contact]).openTooltip()
+    }
+    // console.log(markers);
+    var bounds = new L.LatLngBounds(markers);
+    contactMap.fitBounds(bounds);
+   
+    contactMap.invalidateSize();
+} 
 
 const Recenter = (contact) => {
     const latitude = contact.latitude;
     const longitude = contact.longitude;
-    contactMap.flyTo([ latitude, longitude], 8);  
+    contactMap.flyTo([ latitude, longitude], 10);  
 }
 
 
