@@ -1,18 +1,16 @@
 extends layout
 
 block content
-    body.container
+    body.container-fluid
+        div 
+            include navbar.pug
         div
-            div 
-                include navbar.pug
-
             .card.row.mx-auto.form
                 .card-header
                     h1 Add a New Contact
                 .card-body
                     form(action="/mailer", method="post") 
                         include form.pug
-                    
                         .form-row
                             .form-group.col-md-12
                                 button.btn.btn-primary.createButton(type="submit") Add Contact

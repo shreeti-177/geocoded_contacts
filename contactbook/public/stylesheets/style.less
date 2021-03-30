@@ -1,35 +1,51 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
-@form-grey: #f2f2f2;
+@form-grey: #f8f5f5;
 @header-grey: rgb(90, 88, 88);
 #mapid {
-        height:300px; 
-        min-width:100px;
-        width:auto;
-  } 
+    height:400px; 
+    min-width:100px;
+    width:auto;
+} 
 
 body {
-	padding: 50px;
     font-family: 'Raleway', sans-serif;
     font-weight: normal;
+    min-width:400px;
+}
+
+
+.Home{
+    padding:10em;
+    min-width:600px;
+    text-align: center;
 }
 .navbar{
-    background-color: darkgray;
+    max-width:90%;
+    margin: auto;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    background-color: @form-grey;
+}
+.navbar-brand{
+    margin: auto;
+    text-align: justify;
 }
 .form-group{
     font-family: 'Raleway', sans-serif;
 }
 
 .card {
-    min-width:400px;
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 10px;
+    max-width:90%;
+    padding: 3em;
+    margin: auto;
     background-color: @form-grey;
 }
+
 .card-header{
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 .form-check-input, .form-check-label{
     margin:0 10px 0 10px;
@@ -39,15 +55,19 @@ body {
     background-color: aliceblue;
 }
 
-.Create{
-    float: right;
-}
 
 p{
     padding: 5px;
     margin-left: 3px;
 }
 
+a{
+    margin:5px;
+}
+
+button{
+    margin: 5px;
+}
 // tr {display: block; }
 // th, td { min-width: 30px;}
 

@@ -3,9 +3,16 @@ var router = express.Router();
 var db = require('./database');
 
 /**
- * Home(): renders the home page that allows the user to submit a new form entry
+ * Home(): renders the home page 
  */
 const Home = (req, res, next) => {
+  res.render('home', { title: 'Contact Book' });
+};
+
+/**
+ * Create(): renders the create page that allows the user to submit a new form entry
+ */
+const Create = (req, res, next) => {
   res.render('mailer', { title: 'Contacts Form' });
 };
 
@@ -71,10 +78,7 @@ const Posted = async (req, res, next) => {
 
 // ***********************requests to /mailer********************************
 router.get('/', Home);
-router.get('/mailer', Home);
+router.get('/mailer', Create);
 router.post('/mailer', Posted);
-router.get('/index', (req, res, next) => {
-  res.render('index', { title: "Title" });
-})
 
 module.exports = router;

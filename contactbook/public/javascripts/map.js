@@ -36,7 +36,7 @@ const Mark = async (contacts) => {
         const latitude = contactObj.latitude;
         const longitude = contactObj.longitude;
 
-        console.log(contactObj.street, latitude);
+        // console.log(contactObj.street, latitude);
 
         markers.push([latitude, longitude]);
 

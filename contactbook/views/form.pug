@@ -16,54 +16,54 @@ mixin prefixInput(value)
     label.form-check-label(for="prefix") #{value}
 
     
-block content
-    .formContent
-        .form-row
+
+.formContent
+    .form-row
+        .form-group.col-md-12
+            .form-radio-input(for="prefix") 
+                .form-check.form-check-inline
+                    +prefixInput("Dr.")
+                    +prefixInput("Mr.")
+                    +prefixInput("Mrs.")
+                    +prefixInput("Ms.")
+    .form-row
+        .form-group.col-md-6
+            +textInput("First Name","firstName", required=true)
+        .form-group.col-md-6
+            +textInput("Last Name","lastName", required=true)
+
+    .form-row.form-group.col-md-12
+        +textInput("Street","street", required=true)
+    
+    .form-row
+        .form-group.col-md-6
+            +textInput("City","city", required=true)
+
+        .form-group.col-md-4
+            -const states=[ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+            label(for="state") State:
+            select.form-control(name="state", required, v-model="contact.state")
+                option(selected="selected", value="") Select
+                each val in states
+                    option(value=val)=val 
+        
+        .form-group.col-md-2
+            +textInput("Zip","zip", required=true)
+    
+    .form-row
+        .form-group.col-md-6
+            +textInput("Phone","phone")
+        .form-group.col-md-6
+            +textInput("Email","email")
+
+    .form-row
+        .form-check
             .form-group.col-md-12
-                .form-radio-input(for="prefix") 
-                    .form-check.form-check-inline
-                        +prefixInput("Dr.")
-                        +prefixInput("Mr.")
-                        +prefixInput("Mrs.")
-                        +prefixInput("Ms.")
-        .form-row
-            .form-group.col-md-6
-                +textInput("First Name","firstName", required=true)
-            .form-group.col-md-6
-                +textInput("Last Name","lastName", required=true)
-
-        .form-row.form-group.col-md-12
-            +textInput("Street","street", required=true)
+                | How may we contact you?
+                | Check all that apply.
+            .form-group.col-md-12
+                +preferred("prefPhone","Phone")
+                +preferred("prefEmail","Email")
+                +preferred("prefMail","Mail")
+                +preferred("prefAny","Any")
         
-        .form-row
-            .form-group.col-md-6
-                +textInput("City","city", required=true)
-
-            .form-group.col-md-4
-                -const states=[ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
-                label(for="state") State:
-                select.form-control(name="state", required, v-model="contact.state")
-                    option(selected="selected", value="") Select
-                    each val in states
-                        option(value=val)=val 
-            
-            .form-group.col-md-2
-                +textInput("Zip","zip", required=true)
-        
-        .form-row
-            .form-group.col-md-6
-                +textInput("Phone","phone")
-            .form-group.col-md-6
-                +textInput("Email","email")
-
-        .form-row
-            .form-check
-                .form-group.col-md-12
-                    | How may we contact you?
-                    | Check all that apply.
-                .form-group.col-md-12
-                    +preferred("prefPhone","Phone")
-                    +preferred("prefEmail","Email")
-                    +preferred("prefMail","Mail")
-                    +preferred("prefAny","Any")
-            

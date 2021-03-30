@@ -7,7 +7,8 @@ new Vue({
         contact: {}, /** Contact in use */
         state: "Read", /** Page state */
         substate: "", /**Substate for create/update */
-        key:""
+        firstkey: "",
+        lastkey:""
     },
 
 
@@ -17,7 +18,7 @@ new Vue({
         v.state = "Read";
         v.contacts = renderVal;
         initMap();
-        // Mark(v.contacts);
+        Mark(v.contacts);
         // console.log(v.contacts);
     },
 
@@ -53,37 +54,38 @@ new Vue({
             this.contacts = result.data.newList;
             Mark(this.contacts);
             this.state = "Read"; /**set state back to read after updating database */
-            // new Map();
         },
 
         //**********************Deletes a contact from the database********************************
         DeleteContact: async function (id) {
             await axios.post("/contacts/"+id+"/delete", { contactId: id });
-            console.log("reached here");
             window.location.reload(); /**reload page after deleting to show the updated list */
-            // this.Map();
             // this.state = "Delete";
         },
 
         //**********************Displays the contact list in the event that the user cancels any operation********************************
         Cancel: function () {
             this.state = "Read";
-            // new Map();
         },
 
         SearchFirst: function (event) {
-            console.log(event.key);
+            console.log(this.firstkey);
             let v = this;
 
-            for (contact in v.contacts) {
-                const filter = event.key.toUpperCase();
-
-                const con = (v.contacts[contact]);
-                const conFilter = con.firstName.toUpperCase();
-                if (conFilter.includes(event.key)) {
-                    console.log(con.firstName);
-                    // this.contacts = con;
+            for (index in v.contacts) {
+                const contact = v.contacts[index];
+                if ((contact.firstName).includes(event.key)) {
+                    console.log(contact.firstName);
                 }
+                //     event.key.toUpperCase();
+
+                // const con = (v.contacts[contact]);
+                // console.log(con.firstName);
+                // const conFilter = con.firstName.toUpperCase();
+                // if (conFilter.includes(event.key)) {
+                //     console.log(con.firstName);
+                //     // this.contacts = con;
+                // }
                 // if (contact.firstName.includes(event.key)) {
                 //     this.contacts = contact;
                 // }

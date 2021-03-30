@@ -6,7 +6,7 @@ block content
     body.container
         div 
             div
-                include navbar.pug
+                include navbar
             #contactPage 
 
 
@@ -16,16 +16,17 @@ block content
                             .row
                                 h1 Contacts Listed 
                             .row
+                                .col-xs-4.form 
+                                    input.form-control(type="text", name="firstkey", placeholder="Search by First Name...")
+                                    //- input.form-control(type="text", name="firstkey", @keyup="SearchFirst", v-model="firstkey", placeholder="Search by First Name...")
                                 .col-xs-4.form
-                                    input.form-control(type="text", name="key", @keyup="SearchFirst", v-model="key", placeholder="Search by First Name...")
-                                    //- input(type="text",id="search", v-model="searchkey" v-on:keyup="SearchFirst", placeholder="Search by first name...")
-                                .col-xs-4.form
-                                    input.form-control(type="text", name="key", v-on:keyup="SearchFirst", v-model="key", placeholder="Search by Last Name...")
-
-                                .col-md-4.form
+                                    input.form-control(type="text", name="lastkey", placeholder="Search by Last Name...")
+                                    //- input.form-control(type="text", name="lastkey", v-on:keyup="SearchLast", v-model="lastkey", placeholder="Search by Last Name...")
+                                .col-xs-2.form
                                     .Create
                                         button.btn.btn-primary(type="button", @click='ShowForm()') Add a New Contact
-
+                                .col-xs-2.form
+                                    a(href="/login" class="btn btn-primary" role="button") Logout
                         .card-body 
                             .contactTable.table-responsive
                                 table.table.table-hover
@@ -52,14 +53,18 @@ block content
        
                                                      
                 #newForm(v-if='state==="CreateUpdate"')
-                    form
-                        include form.pug
-                        .form-group(v-if='substate==="Create"')
-                                button.btn.btn-primary.createButton(type="button",@click='PostContact()') Add New Contact
-                                button.btn.btn-default.cancelButton(type="submit",@click='Cancel()') Cancel
-                        .form-group(v-if='substate==="Update"')
-                                button.btn.btn-primary.updateButton(type="button",@click='PostContact()') Save Changes and Update
-                                button.btn.btn-default.cancelButton(type="submit",@click='Cancel()') Cancel
+                    .card.row.mx-auto.form
+                        .card-header
+                            h3 Add/Update
+                        .card-body
+                            form
+                                include form.pug
+                                .form-group(v-if='substate==="Create"')
+                                        button.btn.btn-primary.createButton(type="button",@click='PostContact()') Add New Contact
+                                        button.btn.btn-default.cancelButton(type="submit",@click='Cancel()') Cancel
+                                .form-group(v-if='substate==="Update"')
+                                        button.btn.btn-primary.updateButton(type="button",@click='PostContact()') Save Changes and Update
+                                        button.btn.btn-default.cancelButton(type="submit",@click='Cancel()') Cancel
                 
                 //- .Delete#confirmDeletion(v-if='state==="Delete"')
                 //-     .modal.fade
@@ -83,9 +88,6 @@ block content
                             #mapid     
                                         
                 
-             
-    
-        
         script(src="./javascripts/vue.js")
 
        

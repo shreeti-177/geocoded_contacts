@@ -7,13 +7,11 @@ block navbar
                     span.icon-bar
                     span.icon-bar
                     span.icon-bar
-                a.navbar-brand(href='#') Contact Book
+                .navbar-brand Contact Book
             #navbar.navbar-collapse.collapse
                 ul.nav.navbar-nav
                     li
-                        a(href='/mailer') Home
-                    li
-                        block Createbar
-                            a(href='/') Create
+                        a(href='/mailer') Create
                     li
                         a(href='/contacts') Contacts
+                    block logout
